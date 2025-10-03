@@ -1,3 +1,10 @@
+/* General Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
   background: linear-gradient(135deg, #2c3e50, #3498db);
@@ -6,42 +13,53 @@ body {
   color: white;
 }
 
+/* Pages */
 .page {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  min-height: 100vh;
 }
 
 .hidden {
   display: none;
 }
 
+/* Header */
 header {
   text-align: center;
   margin-bottom: 20px;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin: 0;
 }
 
+/* Sections */
 .upload, .videos, .requests {
   background: rgba(255,255,255,0.1);
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px;
   margin: 15px 0;
-  width: 80%;
-  max-width: 700px;
+  width: 95%;
+  max-width: 500px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
+h2 {
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+/* Inputs & Buttons */
 input, button {
-  padding: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   margin: 5px 0;
+  font-size: 1rem;
 }
 
 input {
@@ -59,29 +77,77 @@ button:hover {
   background: #2ecc71;
 }
 
+/* Video Cards */
 .video-card {
   background: rgba(0,0,0,0.5);
   padding: 15px;
-  margin: 10px 0;
-  border-radius: 10px;
+  margin: 15px 0;
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.video-card p {
+  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
 .video-card iframe {
   width: 100%;
-  border-radius: 8px;
+  aspect-ratio: 1/1;   /* makes it square */
+  border-radius: 12px;
 }
 
+/* Comments */
 .comments {
   margin-top: 10px;
+  width: 100%;
 }
 
 .comments input {
-  width: 60%;
+  width: 65%;
+  font-size: 0.9rem;
 }
 
 .comment {
   background: rgba(255,255,255,0.15);
-  padding: 5px 10px;
-  border-radius: 6px;
-  margin: 3px 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+/* Requests */
+.requests ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.requests li {
+  background: rgba(255,255,255,0.15);
+  padding: 8px;
+  border-radius: 8px;
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  input, button {
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+
+  .video-card iframe {
+    aspect-ratio: 4/3;  /* slight rectangle but friendly for mobile */
+  }
 }
