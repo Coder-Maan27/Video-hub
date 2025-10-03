@@ -64,12 +64,18 @@ function renderVideos() {
     }
 
     div.innerHTML = `
-      <p>Shared by: <b>${v.user}</b></p>
+      <p>Shared by: <b>${v.user}</b> 
+        ${v.user === currentUser ? `<button class="delete-btn" onclick="deleteVideo(${index})">❌</button>` : ""}
+      </p>
       <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
       <div class="comments">
         <h4>Comments</h4>
         <div id="comments-${index}">
-          ${v.comments.map(c => `<div class="comment"><b>${c.user}:</b> ${c.text}</div>`).join("")}
+          ${v.comments.map((c, ci) => `
+            <div class="comment">
+              <b>${c.user}:</b> ${c.text}
+              ${c.user === currentUser ? `<button class="delete-btn-small" onclick="deleteComment(${index}, ${ci})">🗑</button>` : ""}
+            </div>`).join("")}
         </div>
         <input type="text" id="commentInput-${index}" placeholder="Write a comment...">
         <button onclick="addComment(${index})">Post</button>
@@ -91,6 +97,22 @@ function addComment(index) {
   renderVideos();
 }
 
+// DELETE video
+function deleteVideo(index) {
+  if (confirm("Delete this video?")) {
+    videos.splice(index, 1);
+    localStorage.setItem("videos", JSON.stringify(videos));
+    renderVideos();
+  }
+}
+
+// DELETE comment
+function deleteComment(videoIndex, commentIndex) {
+  videos[videoIndex].comments.splice(commentIndex, 1);
+  localStorage.setItem("videos", JSON.stringify(videos));
+  renderVideos();
+}
+
 function addRequest() {
   const req = document.getElementById('requestText').value.trim();
   if (!req) return;
@@ -105,9 +127,17 @@ function addRequest() {
 function renderRequests() {
   const list = document.getElementById('requestList');
   list.innerHTML = "";
-  requests.forEach(r => {
+  requests.forEach((r, i) => {
     const li = document.createElement('li');
-    li.textContent = `${r.user}: ${r.text}`;
+    li.innerHTML = `${r.user}: ${r.text}
+      ${r.user === currentUser ? `<button class="delete-btn-small" onclick="deleteRequest(${i})">🗑</button>` : ""}`;
     list.appendChild(li);
   });
+}
+
+// DELETE request
+function deleteRequest(index) {
+  requests.splice(index, 1);
+  localStorage.setItem("requests", JSON.stringify(requests));
+  renderRequests();
 }
