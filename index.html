@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ASM VIDEO SHARING HUB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Hamburger Menu -->
+  <header>
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <h2>ASM VIDEO SHARING HUB</h2>
+    <div class="theme-toggle" id="themeToggle">🌙</div>
+  </header>
+
+  <nav id="sideMenu" class="side-menu">
+    <a href="#" id="profileBtn">Profile</a>
+    <a href="#" id="uploadBtn">Upload Video</a>
+    <a href="#" id="requestsBtn">View Requests</a>
+    <a href="#" id="logoutBtn">Logout</a>
+  </nav>
+
+  <!-- Category Sections -->
+  <main>
+    <section id="educational" class="video-section">
+      <h3>Educational</h3>
+      <div class="video-list" id="educationalList"></div>
+    </section>
+
+    <section id="personal" class="video-section">
+      <h3>Personal</h3>
+      <div class="video-list" id="personalList"></div>
+    </section>
+
+    <section id="sports" class="video-section">
+      <h3>Sports</h3>
+      <div class="video-list" id="sportsList"></div>
+    </section>
+  </main>
+
+  <!-- Video Request Section -->
+  <section class="requests">
+    <h3>Request a Video</h3>
+    <form id="requestForm">
+      <input type="text" id="requestText" placeholder="Type your request here..." required>
+      <button type="submit">Submit</button>
+    </form>
+    <ul id="requestList"></ul>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
