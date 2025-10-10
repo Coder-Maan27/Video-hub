@@ -6,6 +6,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
+  <script>
+  // Redirect to login if not logged in
+  if (!localStorage.getItem("loggedIn")) {
+    window.location.href = "index.html";
+  }
+  </script>
 <body class="login-page">
   <div class="login-container">
     <h1>ASM VIDEO SHARING HUB</h1>
