@@ -1,60 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ASM VIDEO HUB</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ASM VIDEO SHARING HUB</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-  <script>
-  // Redirect to login if not logged in
-  if (!localStorage.getItem("loggedIn")) {
-    window.location.href = "login.html";
-  }
-  </script>
 <body>
-  <!-- Hamburger Menu -->
-  <header>
-    <div class="menu-toggle" id="menuToggle">&#9776;</div>
-    <h2>ASM VIDEO HUB</h2>
-    <div class="theme-toggle" id="themeToggle">🌙</div>
-  </header>
+  <!-- =========================
+       LOGIN / SPLASH SCREEN
+       (shown when not logged in)
+       ========================= -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-card">
+      <h1 class="brand">ASM VIDEO SHARING HUB</h1>
+      <p class="subtitle">Share • Learn • Discuss</p>
 
-  <nav id="sideMenu" class="side-menu">
-    <a href="#" id="profileBtn">Profile</a>
-    <a href="#" id="uploadBtn">Upload Video</a>
-    <a href="#" id="requestsBtn">View Requests</a>
-    <a href="#" id="logoutBtn">Logout</a>
-  </nav>
+      <form id="loginForm" class="login-form" autocomplete="off">
+        <input id="loginName" type="text" placeholder="Enter your display name" required />
+        <input id="loginPass" type="password" placeholder="Password (demo)" required />
+        <div class="login-actions">
+          <button type="submit" class="btn primary">Sign in</button>
+        </div>
 
-  <!-- Category Sections -->
-  <main>
-    <section id="educational" class="video-section">
-      <h3>Educational</h3>
-      <div class="video-list" id="educationalList"></div>
-    </section>
+        <div class="login-meta">
+          <label class="small"><input id="rememberChk" type="checkbox" /> Remember me</label>
+        </div>
+      </form>
 
-    <section id="personal" class="video-section">
-      <h3>Personal</h3>
-      <div class="video-list" id="personalList"></div>
-    </section>
+      <p class="login-foot">Welcome — please sign in to access the hub.</p>
+    </div>
 
-    <section id="sports" class="video-section">
-      <h3>Sports</h3>
-      <div class="video-list" id="sportsList"></div>
-    </section>
-  </main>
+    <div class="login-decor">
+      <!-- decorative area: subtle gradient + illustration placeholder -->
+    </div>
+  </div>
 
-  <!-- Video Request Section -->
-  <section class="requests">
-    <h3>Request a Video</h3>
-    <form id="requestForm">
-      <input type="text" id="requestText" placeholder="Type your request here..." required>
-      <button type="submit">Submit</button>
-    </form>
-    <ul id="requestList"></ul>
-  </section>
+  <!-- =========================
+       MAIN SITE
+       (hidden until logged in)
+       ========================= -->
+  <div id="app" class="app hidden">
+    <!-- Header -->
+    <header class="topbar">
+      <div class="left">
+        <button id="hamburger" class="hamburger" aria-label="Open menu">☰</button>
+        <h2 class="site-title">ASM VIDEO SHARING HUB</h2>
+      </div>
 
+      <div class="right">
+        <div class="welcome">Hello, <span id="userNameDisplay"></span></div>
+        <button id="themeToggle" class="icon-btn" title="Toggle theme">🌙</button>
+      </div>
+    </header>
+
+    <!-- Side menu -->
+    <aside id="sideMenu" class="side-menu">
+      <nav>
+        <button class="side-close" id="sideClose">✕</button>
+        <ul>
+          <li><button class="menu-btn" data-action="home"><a href="index.html">Home</a></button></li>
+          <li><button class="menu-btn" data-action="upload"><a href="upload.html">Upload Video </a></button></li>
+          <li><button class="menu-btn" data-action="requests"><a href="requests.html">View Requests</a></button></li>
+          <li><button class="menu-btn" data-action="profile"><a href="profile.html">Profile</a></button></li>
+          <li><button id="logoutBtn" class="danger">Logout</button></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <!-- Category filter tabs -->
+      <section class="filters">
+        <button class="filter-btn active" data-cat="all">All</button>
+        <button class="filter-btn" data-cat="Educational">Educational</button>
+        <button class="filter-btn" data-cat="Personal">Personal</button>
+        <button class="filter-btn" data-cat="Sports">Sports</button>
+      </section>
+
+      <!-- Video area -->
+      <section id="videoArea" class="video-area">
+        <!-- Videos are rendered here -->
+      </section>
+
+      <!-- Upload panel (hidden by default) -->
+      <section id="uploadPanel" class="panel hidden">
+        <h3>Upload a video (link)</h3>
+        <input id="videoTitle" placeholder="Video title" />
+        <input id="videoUrl" placeholder="YouTube or Instagram URL" />
+        <div class="categories">
+          <label><input type="checkbox" name="cat" value="Educational" /> Educational</label>
+          <label><input type="checkbox" name="cat" value="Personal" /> Personal</label>
+          <label><input type="checkbox" name="cat" value="Sports" /> Sports</label>
+        </div>
+        <div class="panel-actions">
+          <button id="addVideoBtn" class="btn primary">Add Video</button>
+          <button id="cancelUploadBtn" class="btn">Cancel</button>
+        </div>
+      </section>
+
+      <!-- Requests panel -->
+      <section id="requestsPanel" class="panel hidden">
+        <h3>Video Requests</h3>
+        <form id="requestForm">
+          <input id="requestText" placeholder="What video would you like?" />
+          <button class="btn" type="submit">Request</button>
+        </form>
+        <ul id="requestList" class="request-list"></ul>
+      </section>
+
+      <!-- Profile panel -->
+      <section id="profilePanel" class="panel hidden">
+        <h3>Your Profile</h3>
+        <p><strong>Name:</strong> <span id="profileName"></span></p>
+        <p><strong>Saved videos:</strong> <span id="profileCount">0</span></p>
+        <button id="logoutBtn2" class="btn danger">Logout</button>
+      </section>
+    </main>
+
+    <!-- Floating upload button (mobile-friendly) -->
+    <button id="fabUpload" class="fab" title="Upload video">＋</button>
+
+    <!-- Small footer -->
+    <footer class="footer">
+      <small>© ASM VIDEO SHARING HUB — demo (frontend only)</small>
+    </footer>
+  </div>
+
+  <!-- Scripts -->
   <script src="script.js"></script>
 </body>
 </html>
